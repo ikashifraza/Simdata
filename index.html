@@ -1,10 +1,10 @@
-<!DOCTYPE html><html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>RAZA DATA TOOL</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>  <style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>  
+  <style>
     body {
       margin: 0;
       padding: 0;
@@ -12,122 +12,121 @@
       background-color: #1e1f22;
       color: #e0e0e0;
       text-align: center;
-    }
+    }.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 30px 15px;
+}
 
-    .container {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 30px 15px;
-    }
+.header {
+  font-size: 2.5em;
+  font-weight: 700;
+  color: #25D366;
+  text-shadow: 0 0 12px rgba(37, 211, 102, 0.5);
+  margin-bottom: 30px;
+}
 
-    .header {
-      font-size: 2.5em;
-      font-weight: 700;
-      color: #25D366;
-      text-shadow: 0 0 12px rgba(37, 211, 102, 0.5);
-      margin-bottom: 30px;
-    }
+.card {
+  background: #2c2f33;
+  border-radius: 20px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
 
-    .card {
-      background: #2c2f33;
-      border-radius: 20px;
-      padding: 30px;
-      margin-bottom: 30px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    }
+input[type="text"] {
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1em;
+  text-align: center;
+  background: #1f2125;
+  color: #e0e0e0;
+}
 
-    input[type="text"] {
-      width: 100%;
-      padding: 18px;
-      border: none;
-      border-radius: 12px;
-      font-size: 1em;
-      text-align: center;
-      background: #1f2125;
-      color: #e0e0e0;
-    }
+.search-btn {
+  width: 100%;
+  padding: 16px;
+  font-size: 1.2em;
+  font-weight: 600;
+  background: #25D366;
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  margin-top: 20px;
+  cursor: pointer;
+}
 
-    .search-btn {
-      width: 100%;
-      padding: 16px;
-      font-size: 1.2em;
-      font-weight: 600;
-      background: #25D366;
-      color: #000;
-      border: none;
-      border-radius: 12px;
-      margin-top: 20px;
-      cursor: pointer;
-    }
+.warning {
+  margin-top: 12px;
+  color: #888;
+  font-size: 0.9em;
+}
 
-    .warning {
-      margin-top: 12px;
-      color: #888;
-      font-size: 0.9em;
-    }
+.result-box {
+  background: #1f2125;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
 
-    .result-box {
-      background: #1f2125;
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
+.result-box p {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+}
 
-    .result-box p {
-      display: flex;
-      justify-content: space-between;
-      margin: 8px 0;
-    }
+.label {
+  color: #aaa;
+  font-weight: 600;
+}
 
-    .label {
-      color: #aaa;
-      font-weight: 600;
-    }
+.value {
+  color: #e0e0e0;
+  font-family: monospace;
+}
 
-    .value {
-      color: #e0e0e0;
-      font-family: monospace;
-    }
+.contact-list {
+  list-style: none;
+  padding: 0;
+}
 
-    .contact-list {
-      list-style: none;
-      padding: 0;
-    }
+.contact-list li {
+  margin: 10px 0;
+}
 
-    .contact-list li {
-      margin: 10px 0;
-    }
+.contact-list a {
+  color: #e0e0e0;
+  text-decoration: none;
+}
 
-    .contact-list a {
-      color: #e0e0e0;
-      text-decoration: none;
-    }
+.contact-list a:hover {
+  color: #25D366;
+}
 
-    .contact-list a:hover {
-      color: #25D366;
-    }
+footer {
+  text-align: center;
+  color: #999;
+  font-size: 0.9em;
+  margin-top: 30px;
+}
 
-    footer {
-      text-align: center;
-      color: #999;
-      font-size: 0.9em;
-      margin-top: 30px;
-    }
+.hidden {
+  display: none;
+}
 
-    .hidden {
-      display: none;
-    }
-  </style></head>
+  </style>
+</head>
 <body>
   <div class="container">
-    <div class="header">RAZA DATA TOOL</div><div class="card">
-  <input type="text" id="query" placeholder="Enter Mobile e.g. 030000XXXXX"/>
-  <button class="search-btn" onclick="searchData()">Search <i class="fa fa-search"></i></button>
-  <p class="warning">Enter number like: 030000XXXXX</p>
-</div>
-
-<div id="results"></div>
+    <div class="header">RAZA DATA TOOL</div>
+    <div class="card">
+      <input type="text" id="query" placeholder="Enter Mobile e.g. 030000XXXXX"/>
+      <button class="search-btn" onclick="searchData()">Search <i class="fa fa-search"></i></button>
+      <p class="warning">Enter number like: 030000XXXXX</p>
+    </div><div id="results"></div>
 <p class="hidden" id="noData"></p>
 
 <div class="card">
@@ -147,7 +146,7 @@
   <p>© 2025 KASHIF . All rights reserved.</p>
 </footer>
 
-  </div>  <script>
+  </div>    <script>
     const whatsappLink = 'https://wa.me/447354208303';
     function searchData() {
       const query = document.getElementById("query").value.trim().replace(/\s+/g, '');
