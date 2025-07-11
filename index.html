@@ -1,57 +1,205 @@
-<canvas id="stars"></canvas>
-
-<script>
-  const canvas = document.getElementById('stars');
-  const ctx = canvas.getContext('2d');
-
-  let stars = [];
-
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
-
-  function createStars(count) {
-    stars = [];
-    for (let i = 0; i < count; i++) {
-      stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 1.5 + 0.5,
-        speed: Math.random() * 0.3 + 0.05
-      });
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RAZA DATA TOOL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #1e1f22;
+      color: #e0e0e0;
+      text-align: center;
     }
-  }
 
-  function drawStars() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#ffffff';
-    stars.forEach(star => {
-      ctx.beginPath();
-      ctx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
-      ctx.fill();
-    });
-  }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 30px 15px;
+    }
 
-  function updateStars() {
-    stars.forEach(star => {
-      star.y += star.speed;
-      if (star.y > canvas.height) {
-        star.y = 0;
-        star.x = Math.random() * canvas.width;
+    .header {
+      font-size: 2.5em;
+      font-weight: 700;
+      color: #25D366;
+      text-shadow: 0 0 12px rgba(37, 211, 102, 0.5);
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: #2c2f33;
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1em;
+      text-align: center;
+      background: #1f2125;
+      color: #e0e0e0;
+    }
+
+    .search-btn {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.2em;
+      font-weight: 600;
+      background: #25D366;
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    .warning {
+      margin-top: 12px;
+      color: #888;
+      font-size: 0.9em;
+    }
+
+    .result-box {
+      background: #1f2125;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .result-box p {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+    }
+
+    .label {
+      color: #aaa;
+      font-weight: 600;
+    }
+
+    .value {
+      color: #e0e0e0;
+      font-family: monospace;
+    }
+
+    .contact-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .contact-list li {
+      margin: 10px 0;
+    }
+
+    .contact-list a {
+      color: #e0e0e0;
+      text-decoration: none;
+    }
+
+    .contact-list a:hover {
+      color: #25D366;
+    }
+
+    footer {
+      text-align: center;
+      color: #999;
+      font-size: 0.9em;
+      margin-top: 30px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style></head>
+<body>
+  <div class="container">
+    <div class="header">RAZA DATA TOOL</div><div class="card">
+  <input type="text" id="query" placeholder="Enter Mobile e.g. 030000XXXXX"/>
+  <button class="search-btn" onclick="searchData()">Search <i class="fa fa-search"></i></button>
+  <p class="warning">Enter number like: 030000XXXXX</p>
+</div>
+
+<div id="results"></div>
+<p class="hidden" id="noData"></p>
+
+<div class="card">
+  <h3>🚨 Disclaimer</h3>
+  <p>This website is for educational and verification purposes only. We do not promote illegal use of data.</p>
+</div>
+
+<div class="card">
+  <h3>Contact Us</h3>
+  <ul class="contact-list">
+    <li><i class="fa fa-phone"></i> <a href="https://wa.me/447354208303?text=Hi%20Kashif%2C%20I%20need%20help%20with%20Sim%20Details." target="_blank">+44 7354 208303 (WhatsApp)</a></li>
+    <li><i class="fa fa-envelope"></i> <a href="mailto:kashif@example.com">kashif@example.com</a></li>
+  </ul>
+</div>
+
+<footer>
+  <p>© 2025 KASHIF . All rights reserved.</p>
+</footer>
+
+  </div>  <script>
+    const whatsappLink = 'https://wa.me/447354208303';
+    function searchData() {
+      const query = document.getElementById("query").value.trim().replace(/\s+/g, '');
+      const url = `https://pakdatabase.site/api/search.php?username=Kami&password=123456&search_term=${encodeURIComponent(query)}`;
+      const resultsContainer = document.getElementById("results");
+      const noData = document.getElementById("noData");
+      resultsContainer.innerHTML = '';
+      noData.classList.remove('hidden');
+      noData.textContent = 'Searching...';
+
+      if (query === '') {
+        noData.textContent = '⚠️ Please enter a valid number';
+        return;
       }
-    });
-  }
 
-  function animate() {
-    drawStars();
-    updateStars();
-    requestAnimationFrame(animate);
-  }
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          let output = '';
+          const numbers = new Set();
+          for (const network in data) {
+            const records = data[network];
+            if (Array.isArray(records)) {
+              records.forEach(entry => {
+                const mobile = entry.Mobile || entry.SUB_NO || '';
+                if (!mobile || numbers.has(mobile)) return;
+                numbers.add(mobile);
+                const name = entry.Name || entry.NAME || 'N/A';
+                const cnic = entry.CNIC || entry.NIC || 'N/A';
+                const address = entry.Address || entry.ADDRESS || 'N/A';
+                output += `
+                  <div class="result-box">
+                    <p><span class="label">Mobile:</span> <span class="value">${mobile}</span></p>
+                    <p><span class="label">Name:</span> <span class="value">${name}</span></p>
+                    <p><span class="label">ID Card:</span> <span class="value">${cnic}</span></p>
+                    <p><span class="label">Address:</span> <span class="value">${address}</span></p>
+                  </div>`;
+              });
+            }
+          }
 
-  createStars(100);
-  animate();
-</script>
+          if (output) {
+            resultsContainer.innerHTML = output;
+            noData.classList.add('hidden');
+          } else {
+            noData.innerHTML = `اس نمبر کا فریش فرنچائز والا ڈیٹا لینا پڑے گا جس کی فیس 500 روپے ہے۔<br><a href="${whatsappLink}" target="_blank">واٹس ایپ پر رابطہ کریں</a>`;
+          }
+        })
+        .catch(err => {
+          console.error("API error:", err);
+          noData.innerHTML = `⚠️ API response failed. Try again or contact admin.`;
+        });
+    }
+  </script></body>
+</html>
